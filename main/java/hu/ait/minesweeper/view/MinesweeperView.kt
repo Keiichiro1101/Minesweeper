@@ -38,6 +38,8 @@ class MinesweeperView (context: Context?, attrs: AttributeSet?) : View(context, 
         MinesweeperModel.inItGameArea(9)
     }
 
+    // The onSizeChanged function is called when the size of the view changes. In this implementation, it resizes all of the bitmap images used in the game to fit the new size.
+    // This is done by calling the createScaledBitmap function on each bitmap and passing the new width and height values.
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         openCell = Bitmap.createScaledBitmap(openCell, width/9, height/9, false)
@@ -54,6 +56,10 @@ class MinesweeperView (context: Context?, attrs: AttributeSet?) : View(context, 
         bitmapDemoFlag = Bitmap.createScaledBitmap(bitmapDemoFlag, width/9, height/9, false)
     }
 
+
+    //The onDraw function is called to draw the game board and its contents. It first draws a background of 9x9 squares using the bitmapDemo0 image.
+    // Then, it calls the drawGameArea function to draw the game board's grid lines.
+    // After that, it calls the revealCell and revealFlag functions to draw the contents of each cell.
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (i in 0..8){
@@ -66,7 +72,9 @@ class MinesweeperView (context: Context?, attrs: AttributeSet?) : View(context, 
         revealFlag(canvas)
     }
 
-
+    // The drawGameArea function draws the game board's grid lines by using the drawRect and drawLine functions from the Canvas class.
+    // It first draws a rectangle around the entire board using the paintLine object.
+    // Then, it draws 9 horizontal lines and 9 vertical lines at equal intervals to create a 9x9 grid.
     private fun drawGameArea(canvas: Canvas) {
         // border
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paintLine)
@@ -86,7 +94,7 @@ class MinesweeperView (context: Context?, attrs: AttributeSet?) : View(context, 
         }
     }
 
-    // reveal specified cell
+    // Reveal specified cell
     private fun revealCell(canvas: Canvas){
         for (Row in 0..8){
             for (Col in 0..8){
@@ -179,7 +187,7 @@ class MinesweeperView (context: Context?, attrs: AttributeSet?) : View(context, 
         }
     }// revealCell
 
-    // reveal all cells
+    // Reveal all cells
     private fun revealAll(canvas:Canvas) {
         for (i in 0..8) {
             for (j in 0..8) {
@@ -231,12 +239,14 @@ class MinesweeperView (context: Context?, attrs: AttributeSet?) : View(context, 
         setMeasuredDimension(d, d)
     }
 
+    // Reset Game to Start
     fun resetGame(){
         MinesweeperModel.resetModel()
         (context as MainActivity).setLoserText("")
         invalidate()
     }
 
+    // Reveal All Flags
     fun revealFlag(canvas:Canvas){
         for (Row in 0..8){
             for (Col in 0..8){
@@ -250,5 +260,4 @@ class MinesweeperView (context: Context?, attrs: AttributeSet?) : View(context, 
             }
         }
     }
-
 }
